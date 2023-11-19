@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+<style>
+	table {
+		border: 1px solid black
+	}
+
+	td {
+		padding: 5px;
+		border: 1px solid black
+	}
+</style>
+
+<body>
+	<div>Задача 6. Задача. На кухню поступають замовлення. Спочатку ми додаємо їх у список “Очікують на виконання”, якщо
+		повар береться робити — замовлення переходить у список “Виконуються”, якщо замовлення виконано — переходить у
+		список “Готові до виносу”. Якщо натиснути на “Подано” - страва зникає з таблиці
+	</div>
+	<div id="app">
+		<div>
+			<label>Нова замовлена страва
+				<input type="text" v-model="dishUser">
+			</label>
+			<button @click="addDish">Додати страву</button>
+		</div>
+		<div>1 - {{waitingList}}</div>
+		<div>2 - {{processingList}}</div>
+		<div>3- {{completedList}}</div>
+		<table>
+			<tr>
+				<th>Очікують</th>
+				<th>Виконуються</th>
+				<th>Готові до виносу </th>
+			</tr>
+			<tr v-for="dish in waitingList" :key="dish.id">
+				<td>{{dish.name}}
+					<button @click="cookDish(dish.id)">Готувати</button>
+				</td>
+			</tr>
+			<tr v-for="dish in processingList" :key="dish.id">
+				<td>
+				<td>{{dish.name}}
+					<button @click="readyDish(dish.id)">Готово</button>
+				</td>
+				</td>
+			</tr>
+			<tr v-for="dish in completedList" :key="dish.id">
+				<td>
+				<td>
+				<td>{{dish.name}}
+					<button @click="closeDish(dish.id)">Подано</button>
+				</td>
+				</td>
+				</td>
+			</tr>
+
+
+		</table>
+	</div>
+</body>
+<script>
+	const { createApp } = Vue
+	let ordersPerDay = 0;
+
+	createApp({
+		data() {
+			return {
+				waitingList: [],
+				processingList: [],
+				completedList: [],
+				dishUser: null,
+				orderCounter: 0
+			}
+		},
+		methods: {
+
+			addDish() {
+				if (this.dishUser) {
+					const dish = {
+						id: this.orderCounter++,
+						name: this.dishUser,
+					}
+					this.waitingList.push(dish);
+					this.dishUser = null;
+				}
+			},
+			cookDish(id) {
+				for (i = 0; i < this.waitingList.length; i++) {
+					if (this.waitingList[i].id == id) {
+						this.processingList.push(this.waitingList[i]);
+						this.waitingList.splice(i, 1);
+						break
+					}
+				}
+			},
+			readyDish(id) {
+				for (i = 0; i < this.processingList.length; i++) {
+					if (this.processingList[i].id == id) {
+						this.completedList.push(this.processingList[i]);
+						this.processingList.splice(i, 1);
+						break
+					}
+				}
+			},
+			closeDish(id){
+				for (i = 0; i < this.completedList.length; i++) {
+					if (this.completedList[i].id == id) {
+						this.completedList.splice(i, 1);
+						break
+					}
+				}
+			}
+		}
+	}).mount('#app')
+</script>
+
+</html>

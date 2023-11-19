@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+<style>
+	body {}
+
+
+	.siteContainer {
+		max-width: 650px;
+		margin-left: 15px;
+		margin-bottom: 20px;
+	}
+
+	.titleClass {
+		display: flex;
+		padding: 5px;
+		column-gap: 10px;
+		align-items: center;
+		font-size: 10px;
+	}
+.titleStyle{
+	font-size: 20px;
+}
+	.descriptionClass {
+		font-size: 15px;
+		color: rgb(74, 69, 69);
+	}
+</style>
+
+<body>
+	<div>
+		Задача 5. Самостійно сформуйте масив даних та виведіть фрагмент на зразок поданого (дані не обов’язково повинні
+		співпадати)
+	</div>
+	<div id="app">
+		<div class="siteContainer" v-for="site in sitesArray" :key="site.id">
+			<div class="titleClass">
+				<img :src="site.imgSrc" width="50">
+				<div>
+					<div>{{site.nameSite}}</div>
+					<div>{{site.linkSite}}</div>
+				</div>
+			</div>
+			<div class="titleStyle"><a :href="site.linkSite">{{site.titleSite}}</a></div>
+			<div class="descriptionClass">{{site.descriptionSite}}</div>
+		</div>
+	</div>
+	<script>
+		const { createApp } = Vue
+		createApp({
+			data() {
+				return {
+					sitesArray: [
+						{
+							idSite: 1,
+							imgSrc: "./img/logo_ksd_2.svg",
+							nameSite: "КСД",
+							linkSite: "https://bookclub.ua/",
+							titleSite: "КСД - офіційний сайт - Інтернет магазин КСД",
+							descriptionSite: "КСД - книжки українських авторів, сучасна та класична література, детективи, трилери. КСД - простір книжок, що захоплюють. Ніяких обов'язкових замовлень, лише кращі книги. Вигідні ціни. Мережа книгарень..."
+						},
+						{
+							idSite: 2,
+							imgSrc: "./img/f4a3359ee6afd4b3e3dd0b1200912100.svg",
+							nameSite: "Видавництво Vivat",
+							linkSite: "https://vivat-book.com.ua/",
+							titleSite: "Видавництво Vivat - книжковий інтернет магазин",
+							descriptionSite: "Інтернет-магазин книг, де є можливість купити книги дешево для дітей та підлітків. Також замовити можна замовити онлайн гарячі літературні новинки."
+						}
+					]
+				}
+			}
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

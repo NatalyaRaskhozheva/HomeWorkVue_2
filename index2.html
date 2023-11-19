@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+<style>
+	.businessClass {
+		height: 1000px;
+		background: url("./img/emirates-business-class-dining-EMIRATESBIZ0322-e8414f0893f640929ea0cb2d286d8e61.jpg");
+	}
+
+	.economClass {
+		height: 1000px;
+		background: url("./img/pattern-figured-clouds-white-cloud-24736.jpg");
+	}
+</style>
+
+<body>
+	<div>Задача 2. З випадаючого списку вибираємо клас квитка у літаку. Якщо
+		1) бізнес - виводимо елементи для вибору газети та коньяку (якщо вибрано коньяк, то запропонувати закуску
+		(так/ні)), на фоні зображення бізнес кают
+		2) економ – виводимо елементи для вибору типу пива і чипсів, на фоні хмарки.
+	</div>
+	<div id="app">
+		<label>Оберіть клас квитка
+			<select v-model="chooseClass">
+				<option value="business">Бізнес</option>
+				<option value="econom">Економ</option>
+			</select>
+		</label>
+		<div :class="showBackground">
+			<div v-if="chooseClass == 'business'">
+				<!-- <img src="./img/emirates-business-class-dining-EMIRATESBIZ0322-e8414f0893f640929ea0cb2d286d8e61.jpg"
+				width="300" alt=""> -->
+				<div>
+					<label>Оберіть газету
+						<select>
+							<option value="Time">Time</option>
+							<option value="Kharkiv">Kharkiv</option>
+						</select>
+					</label>
+				</div>
+				<div>
+					<label> Оберіть коньяк
+						<select v-model="alcoholChoose">
+							<option value="Hennessy">Hennessy</option>
+							<option value="Bisquit">Bisquit</option>
+						</select>
+					</label>
+					<div v-if="alcoholChoose !=null">
+						<label>Закуску?
+							<input type="checkbox">Так
+						</label>
+					</div>
+				</div>
+			</div>
+			<div v-if="chooseClass=='econom'">
+				<div>
+					<label>Оберіть пиво
+						<select>
+							<option value="">Zibert</option>
+							<option value="Chernihivske">Chernihivske</option>
+						</select>
+					</label>
+				</div>
+				<div>
+					<label>Оберіть чипси
+						<select>
+							<option value="Lays">Lays</option>
+							<option value="Koko">Koko</option>
+						</select>
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		const { createApp } = Vue
+		const app = createApp({
+			data() {
+				return {
+					chooseClass: "econom",
+					alcoholChoose: null
+				}
+			},
+			computed: {
+				showBackground() {
+					if (this.chooseClass == "business") return "businessClass"
+					else if (this.chooseClass == "econom") return "economClass"
+				}
+			}
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+
+<body>
+	<div>
+		4. Вивести список як маркований список з елементами у форматі (name: salary)
+	</div>
+	<div id="app">
+		<ul v-for="worker in workerList2" :key="worker.id">
+			<li>{{worker.name}} : {{worker.salary}}</li>
+		</ul>
+	</div>
+
+</body>
+<script>
+	const { createApp } = Vue
+	const app = createApp({
+		data() {
+			return {
+				workerList2: [
+					{
+						id: '111',
+						name: 'Raskhozheva',
+						salary: 10000000
+					},
+					{
+						id: '112',
+						name: 'Naumenko',
+						salary: 5000
+					},
+				],
+			}
+		}
+	}).mount('#app')
+</script>
+
+</html>

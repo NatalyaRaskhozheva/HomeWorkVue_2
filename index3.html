@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+<style>
+	.wordStyle {
+		text-align: center;
+		width: 300px;
+	}
+
+	.wordGreen {
+		border: 1px solid green;
+	}
+
+	.wordRed {
+		border: 1px solid red;
+	}
+
+	img {
+		width: 200px;
+	}
+</style>
+
+<body>
+	Задача 3. Елемент тренажера англійської. Виводимо зображення елемента і слово. Користувач вводить відповідь. Якщо
+	вірно – відтворюємо фразу «Добре. Молодець!» (і додаємо зелену рамку до елемента), якщо ні - то відтворюємо фразу
+	«Невірно, спробуйте ще раз» (і додаємо червону рамку).
+	<div id="app">
+		<div :class="['wordStyle', colorBorder]">
+			<div>
+				<img :src="imgSrc" alt="">
+			</div>
+			<div>{{eng}}</div>
+			<label>Ваш переклад
+				<div>
+					<input type="text" v-model="userTranslate">
+				</div>
+			</label>
+			<div>
+				<button @click="check">Перевірка</button>
+			</div>
+			<div>{{message}}</div>
+		</div>
+
+	</div>
+	<script>
+		const word =
+		{
+			imgSrc: "./img/depositphotos_162094036-stock-photo-used-wooden-table-isolated.jpg",
+			eng: "table",
+			ua: "стіл"
+		}
+
+		const { createApp } = Vue
+		createApp({
+			data() {
+				return {
+					imgSrc: word.imgSrc,
+					eng: word.eng,
+					ua: word.ua,
+					userTranslate: null,
+					message: null,
+					isCorrect: null
+				}
+			},
+			computed: {
+				colorBorder() {
+					if (this.isCorrect == true) return 'wordGreen'
+					else if (this.isCorrect == false) return 'wordRed'
+				}
+			},
+			methods: {
+				check() {
+					if (this.ua == this.userTranslate.toLowerCase()) {
+						this.isCorrect = true
+						this.message = "Добре. Молодець!"
+					}
+					else {
+						this.isCorrect = false
+						this.message = "Невірно! Спробуйте ще раз!"
+					}
+				}
+			}
+		}).mount("#app")
+	</script>
+</body>
+
+</html>

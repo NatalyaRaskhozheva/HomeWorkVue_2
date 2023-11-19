@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+	<style>
+		.middle {
+			color: blue;
+		}
+
+		.low {
+			color: red;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app">
+		Задача 1. Вводимо логіна і пароль. Якщо логін вірний відображаємо смайл. Якщо ні, то:
+		1) якщо логін = Іван – колір повідомлення про помилку синій
+		2) якщо хтось інший, то колір повідомлення червоний
+
+		<div>
+			<label>Login
+				<input type="text" v-model="loginUser">
+			</label>
+		</div>
+		<div>
+			<label>Password
+				<input type="password" v-model="passwordUser">
+			</label>
+		</div>
+		<div>
+			<button @click="toConfirm">Go</button>
+		</div>
+		<div>
+			<img v-if="success" src="./img/depositphotos_1448005-stock-illustration-smile.jpg" width="100" alt="">
+			<div v-else :class="findColor">{{message}}</div>
+		</div>
+	</div>
+	<script>
+		const { createApp } = Vue
+		const rightUser = {
+			login: 'Semka',
+			password: 'SuperCat',
+		}
+		const app = createApp({
+			data() {
+				return {
+					loginUser: null,
+					passwordUser: null,
+					success: false,
+					message: null
+				}
+			},
+			methods: {
+				toConfirm() {
+					if (rightUser.login === this.loginUser && rightUser.password === this.passwordUser) {
+						return this.success = true
+					}
+					this.message = 'Error'
+				}
+			},
+			computed: {
+				findColor() {
+					if (this.success === false) {
+						if (this.loginUser === "Ivan") return "middle"
+						else return "low"
+					}
+				}
+			}
+		}).mount('#app')
+	</script>
+</body>
+
+</html>
